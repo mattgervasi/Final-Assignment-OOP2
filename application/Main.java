@@ -10,6 +10,7 @@ public class Main {
         Date time = new Date();
         time.setHours(25);
         System.out.println(time.getHours());
+        dfvdf
     }
     
 }
