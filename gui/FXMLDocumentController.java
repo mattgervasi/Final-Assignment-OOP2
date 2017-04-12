@@ -108,13 +108,13 @@ public class FXMLDocumentController implements Initializable {
                     String serial;
                     String size;
                     
-//                    String [] items = new String[6];
-//                    items[0] = line;
-//                    for(int x = 1; x < 6; x++) {
-//                        items[x] = in.readLine();
-//                    }
-                    //tdata.add(new Clothes(items[0], items[1], items[2], items[3]
-                    //, items[4], items[5]));
+                   String [] items = new String[6];
+                   items[0] = line;
+                   for(int x = 1; x < 6; x++) {
+                       items[x] = in.readLine();
+                   }
+                    tdata.add(new Clothes(items[0], items[1], (Double.parseDouble(items[2])), (Boolean.parseBoolean(items[3]))
+                    , items[4], items[5]));
                 }
                 if (tdata.size() > 0) {
                     listData.clear();
