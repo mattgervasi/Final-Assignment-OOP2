@@ -10,32 +10,64 @@
 <AnchorPane fx:id="rootPane" prefHeight="400" prefWidth="420" xmlns:fx="http://javafx.com/fxml/1" fx:controller="finalproject.FXMLDocumentController">
     <BorderPane AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
         <top>
-            <Label layoutX="15" layoutY="15" text="Select your closing article by Name or Serial Code" /> 
-            <MenuBar>
-               <Menu text="File" fx:id="recentMenu">
-                   <MenuItem text="Open" onAction="#fileLoadEvent"/> 
-                   <MenuItem text="Open Recent" disable="true"/>
-               </Menu>
-           </MenuBar> 
+            <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE">
+                <tabs>
+                    <Tab text="First Menu" fx:id="tab1">
+                        <content>
+                            <AnchorPane id="Tab1AnchorPane" prefHeight="400" prefWidth="400" xmlns:fx="http://javafx.com/fxml/1">
+                                <BorderPane AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+                                    <top>
+                                        <Label layoutX="15" layoutY="15" text="Select your closing article by Name or Serial Code"/>  
+                                    </top>
+                                    <padding>
+                                        <Insets top="20.0" right="20.0" />
+                                    </padding>
+                                    <center>
+                                        <ListView fx:id="listView"/>
+                                    </center>
+                                    <right>
+                                        <VBox alignment="center" spacing="10">
+                                            <padding>
+                                                <Insets left="15.0" />
+                                            </padding>
+                                            <Button text="Top" onAction="#topButtonEvent" />
+                                            <Button text="Up" onAction="#upButtonEvent" />
+                                            <Button text="Down" onAction="#downButtonEvent" />
+                                            <Button text="Bottom" onAction="#bottomButtonEvent" />
+                                            <Button text="Select" />       
+                                        </VBox>
+                                    </right>   
+                                </BorderPane>   
+                            </AnchorPane>
+                        </content>
+                    </Tab>
+                    <Tab text="Second Menu" fx:id="tab2">
+                        <content>
+                            <AnchorPane id="Tab1AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1">
+                                <BorderPane AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+                                    <top>
+                                        <Label text="Here is our information on selected product. " /> 
+                                    </top>
+                                    <center>
+                                        <TextField prefWidth="100" minHeight="300">   
+                                        </TextField>
+                                    </center>
+                                    <right>
+                                        <VBox spacing="10">
+                                        <Button text="Edit" />
+                                        <padding>
+                                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                        </padding>
+                                        <Button text="Back" />
+                                        </VBox>
+                                    </right>
+                                </BorderPane>
+                            </AnchorPane>
+                        </content>
+                    </Tab>
+                </tabs>
+            </TabPane>
         </top>
-        <padding>
-             <Insets top="20.0" right="20.0" />
-        </padding>
-            <center>
-<!--                <TextField prefWidth="250" prefHeight="250" layoutX="50" layoutY="50" />-->
-                <ListView fx:id="listView"/>
-            </center>
-            <right>
-                <VBox alignment="center" spacing="10">
-                    <padding>
-                        <Insets left="15.0" />
-                    </padding>
-                    <Button text="Top" onAction="#topButtonEvent" />
-                    <Button text="Up" onAction="#upButtonEvent" />
-                    <Button text="Down" onAction="#downButtonEvent" />
-                    <Button text="Bottom" onAction="#bottomButtonEvent" />
-                    <Button text="Select" />       
-                </VBox>
-            </right>
     </BorderPane>
+
 </AnchorPane>
