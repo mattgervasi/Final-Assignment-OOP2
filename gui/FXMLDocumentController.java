@@ -8,6 +8,8 @@ package finalproject;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import static java.lang.Boolean.parseBoolean;
+import static java.lang.Double.parseDouble;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -16,7 +18,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
@@ -45,17 +51,15 @@ public class FXMLDocumentController implements Initializable {
     private TextField items;
     
     @FXML
+    private Button back;
+    
+    @FXML
     AnchorPane rootPane;
     
     @FXML
-    private ListView listView;
+    private ListView listView, listView2;
     ObservableList<Clothes> listData = FXCollections.observableArrayList();
-    
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-       
-    }
-    
+  
     @FXML
     private void fileLoadEvent(ActionEvent e) {
         FileChooser chooser = new FileChooser();
@@ -77,7 +81,6 @@ public class FXMLDocumentController implements Initializable {
                 public void handle(ActionEvent event) {
                     loadDataFromFile(new File(mi.getText()));
                 }
-
             });
             recentMenu.getItems().add(mi);
             if (recentMenu.getItems().size() > 10) {
@@ -89,44 +92,29 @@ public class FXMLDocumentController implements Initializable {
     
 
     private void loadDataFromFile(File selectedFile) {
-
         if (selectedFile.getName().equals("data.txt")) {
-
             ObservableList<Clothes> tdata = FXCollections.observableArrayList();
             try {
                 BufferedReader in = new BufferedReader(new FileReader(selectedFile));
                 for (String line = in.readLine();
                         line != null;
-                        line = in.readLine()) {
-                    if (!line.contains(",")) {
-                        continue;
-                    }
-                    String name = line.substring(0, line.indexOf(','));
-                    String type;
-                    Double price;
-                    Boolean avaialbilty;
-                    String serial;
-                    String size;
-                    
-                   String [] items = new String[6];
-                   items[0] = line;
-                   for(int x = 1; x < 6; x++) {
-                       items[x] = in.readLine();
-                   }
-                    tdata.add(new Clothes(items[0], items[1], (Double.parseDouble(items[2])), (Boolean.parseBoolean(items[3]))
-                    , items[4], items[5]));
+                        line = in.readLine()) {               
+                    String name= line.substring(0, line.indexOf(','));
+                    String type= line.substring(line.indexOf(',') + 1);
+                    String price= line.substring(type.indexOf(',') + 1);
+                    String avaialbilty= line.substring(price.indexOf(',') + 1);
+                    String serial= line.substring(avaialbilty.indexOf(',') + 1);
+                    String size= line.substring(serial.indexOf(',') + 1);
+                    //Skips name when its printed out ?? Only reason i can think of is the substring but its starting at index 0 and up to
+                    //the first ',' ..
+                    tdata.add(new Clothes(name, type, parseDouble(price), parseBoolean(avaialbilty), serial, size));       
                 }
-                if (tdata.size() > 0) {
-                    listData.clear();
-                    listData.addAll(tdata);
-                }
+                
                 in.close();
             } catch (Exception ex) {
                 System.out.println(ex.toString());
             }
-
         }
-
     }
 
     @FXML
@@ -155,7 +143,6 @@ public class FXMLDocumentController implements Initializable {
             listData.remove(selectedIndex);
             listData.add(p);
             listView.getSelectionModel().clearAndSelect(listData.size() - 1);
-
         }
     }
 
@@ -166,7 +153,6 @@ public class FXMLDocumentController implements Initializable {
             listData.remove(selectedIndex);
             listData.add(selectedIndex - 1, p);
             listView.getSelectionModel().clearAndSelect(selectedIndex - 1);
-
         }
     }
 
@@ -177,7 +163,6 @@ public class FXMLDocumentController implements Initializable {
             listData.remove(selectedIndex);
             listData.add(selectedIndex + 1, p);
             listView.getSelectionModel().clearAndSelect(selectedIndex + 1);
-
         }
     }
     
@@ -188,7 +173,6 @@ public class FXMLDocumentController implements Initializable {
         listData.add(new Clothes("String", "String", 2.0, false, "String", "String"));
         listData.add(new Clothes("String", "String", 3.0, true, "String", "String"));
         listData.add(new Clothes("String", "String", 4.0, false, "String", "String"));
-
         listView.setItems(listData);
     }    
     
@@ -251,10 +235,10 @@ public class FXMLDocumentController implements Initializable {
         @Override
         public String toString(){
             String text = "";
-            text += getName() + "\n" + getType() + "\n" +
-                    Double.toString(getPrice()) + "\n" +
-                    Boolean.toString(getAvailable()) + "\n" +
-                    getSerial() + "\n" + getSize();
+            text += getName() + "," + getType() + "," +
+                    Double.toString(getPrice()) + "," +
+                    Boolean.toString(getAvailable()) + "," +
+                    getSerial() + "," + getSize();
             return text; 
         }
     }
